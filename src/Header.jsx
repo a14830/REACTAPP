@@ -6,8 +6,8 @@ function Header() {
         <div>
             <logo><img src={heroImg} alt="Hero Vite" /></logo>
                 <nav>
-                    <a href="Home">HOME</a>
-                    <a href="Contact" >CONTACTOS"</a>
+                    <a href="Home">HOME</a> <a></a>
+                    <a href="Contact" >CONTACTOS</a>
                 </nav>
                 <div className='clear'></div>
         </div>
