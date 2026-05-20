@@ -1,0 +1,12 @@
+logo {
+    float: left;
+    width:30%;
+    text-align:left
+}
+logo img{ width :100%; max-width:150%; }
+
+nav{float: right;max-width: 100%; text-align: right;}
+
+nav a{color: #fc0; text-decoration:none;}
+
+nav a:hover{ color: #000;  font-weight:bold}

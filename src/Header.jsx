@@ -1,11 +1,17 @@
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
 import heroImg from './assets/hero.png'
-import './App.css'
-
+import './Header.css'
 
 function Header() {
-    return
+    return (
+        <div>
+            <logo><img src={heroImg} alt="Hero Vite" /></logo>
+                <nav>
+                    <a href="Home">HOME</a>
+                    <a href="Contact" >CONTACTOS"</a>
+                </nav>
+                <div className='clear'></div>
+        </div>
+    )
 }
 
-export default Header
+export default Header;

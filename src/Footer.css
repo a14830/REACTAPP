@@ -1,0 +1,16 @@
+.footer-center {
+font-size: 16xp;
+text-align: center;
+padding: 30px 30px;
+}
+.fotter-center a {
+
+    color: #fc0;
+    text-decoration: none;
+    padding: 10px;
+}
+.footer-center a:hover {
+
+    color: #000;
+    font-weight: bold;
+}
