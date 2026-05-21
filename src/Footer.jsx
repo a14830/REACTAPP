@@ -7,7 +7,7 @@ function Footer() {
         <div>
             <div className='Footer-center'></div>
             <nav>
-                <a href="home">HOME</a>
+                <a href="home">X</a>
                 <a href=""></a>
             </nav>
             </div>
