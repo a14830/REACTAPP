@@ -1,6 +1,10 @@
+
 function Message() {
-    return<div>Home</div>
-    
+    return (
+       <div>
+            a minha mensagem
+       </div> 
+    )
 }
 
 export default Message

@@ -1,32 +1,9 @@
-logo {
-    float: left;
-    width:30%;
-    text-align:left
-}
-logo img{ 
-    width :100%;
-    max-width:150%;
-}
+logo {   float:left;   width:30%;   text-align:left; }
 
-nav{
-    float: right;
-    max-width: 100%;
-    text-align: right;
-}
+logo img{ width:100%;   max-width:150px; }
 
-nav a{
-    color: #fc0;
-    text-decoration:none;
-}
+nav {   float:right;   width:65%;   text-align: right; }
 
-nav a:hover{
-    color: #000;
-    font-weight:bold;
-    text-decoration: underline;
-}
+nav a {   color: #fc0;   text-decoration:none;   padding:10px; }
 
-nav a:hover{
-     color: #912eae;
-    font-weight:bold;
-    text-decoration:underline;
-}
+nav a:hover {   color: #000;   font-weight:Bold; }

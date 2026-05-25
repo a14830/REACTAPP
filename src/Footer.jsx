@@ -1,17 +1,13 @@
-import heroImg from './assets/hero.png'
+
 import './Footer.css'
 
 function Footer() {
     return (
-
-        <div>
-            <div className='Footer-center'></div>
-            <nav>
-                <a href="home">X</a>
-                <a href=""></a>
-            </nav>
-            </div>
-
-     )
+       <div className='footer-center'>
+            <a href="/home">HOME</a>
+            <a href="/contactos">CONTACTOS</a>
+       </div> 
+    )
 }
-                export default Footer;
+
+export default Footer

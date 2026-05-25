@@ -1,17 +1,17 @@
+import "./Header.css"
 import heroImg from './assets/hero.png'
-import './Header.css'
 
 function Header() {
     return (
-        <div>
+       <div>
             <logo><img src={heroImg} alt="Hero Vite" /></logo>
-                <nav>
-                    <a href="Home">HOME</a> <a></a>
-                    <a href="Contact" >CONTACTOS</a>
-                </nav>
-                <div className='clear'></div>
-        </div>
+            <nav>
+                <a href="/home">HOME</a>
+                <a href="/contactos">CONTACTOS</a>
+            </nav>
+            <div className="clear"></div>
+       </div> 
     )
 }
 
-export default Header;
+export default Header
