@@ -29,7 +29,6 @@ function App() {
        {/*<Contador />*/}
 
       <h1 className="text-center">Notas</h1>
-       <h1 className="text-left">Cálculo da nota final</h1>
       {/*<Mensagem mytext="Bem-vindo à tua primeira aplicação React!" />*/}
       {/*<Mensagem mytext="Os componentes permitem reutilizar código!" />*/}
 

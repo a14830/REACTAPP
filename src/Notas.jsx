@@ -1,109 +1,133 @@
 import React, { useState } from 'react';
 
-
 function Notas() {
 
-    const [formData, setFormData] = useState({
-        nome: '',
+    const [NotaTeste, setNotaTeste] = useState({
+        nomeAluno: '',
         disciplina: '',
-        notasTeste: '',
-        porctestes: '',
-        notaTrabalho: '',
-        porcTrabalho: ''
+        notaTeste: 0,
+        porcentagemTeste: 0,
+        notaTrabalho: 0,
+        porcentagemTrabalho: 0,
+        notaAtitudes: 0,
+        porcentagemAtitudes: 0,
     });
 
-    // Guarda os dados submetidos (para mostrar depois do envio)
-    const [dadosSubmetidos, setDadosSubmetidos] = useState(null);
 
-    // Esta função é chamada quando o formulário é submetido
-    function handleSubmit(e) {
-        e.preventDefault(); // impede o recarregamento da página
-        setDadosSubmetidos(formData); // guarda os dados preenchidos
-    }
-
-    // Limpa o formulário e os dados apresentados
     function limparFormulario() {
-        setFormData({ nome: '', email: '', telefone: '', morada: '', codigopostal: '', mensagem: '' });
-        setDadosSubmetidos(null);
+        setNotaTeste({
+            nomeAluno: '',
+            disciplina: '',
+            notaTeste: 0,
+            porcentagemTeste: 0,
+            notaTrabalho: 0,
+            porcentagemTrabalho: 0,
+            notaAtitudes: 0,
+            porcentagemAtitudes: 0,
+        });
+    }
+    function calcularNotaFinal(e) {
+
+        e.preventDefault(); // impede o recarregamento da página
+        // Aqui irias buscar os valores dos campos do formulário, calcular a nota final e mostrar o resultado
+        
+        /*if (NotaTeste.porcentagemTeste + NotaTeste.porcentagemTrabalho + NotaTeste.porcentagemAtitudes !== 100) {
+            alert('A soma das porcentagens deve ser igual a 100%. Por favor, ajuste as porcentagens e tente novamente.');
+            return;
+        }*/
+        
+        const nota = (NotaTeste.notaTeste * NotaTeste.porcentagemTeste / 100) + (NotaTeste.notaTrabalho * NotaTeste.porcentagemTrabalho / 100) + (NotaTeste.notaAtitudes * NotaTeste.porcentagemAtitudes / 100);
+
+        //notaArredondada = nota.toFixed(2);
+
+            if (NotaTeste.notaTeste == 0 || NotaTeste.notaTrabalho == 0 || NotaTeste.notaAtitudes == 0) {
+                alert('Por favor, preencha todas as notas antes de calcular a nota final.');
+            } else {
+                if (nota >= 9.5) {
+                    alert(NotaTeste.nomeAluno + 'APROVADO ' + nota + ' valores');
+                } else {
+                    alert(NotaTeste.nomeAluno + ',: REPROVADO ' + nota + ' valores');
+                }
+            }
+
     }
 
-    function eliminarTarefa() {
-        setDadosSubmetidos([]);
-    }
 
     return (
-        <div className="mt-4 row">
-            <div class="col-8">
-                <form onSubmit={handleSubmit}>
-                    {/* Cada campo é controlado — o valor vem do estado React */}
-                    <div className="form-group">
-                        <label>Nome</label>
-                        <textarea type="email" className="form-control" value={formData.nome} onChange={(e) =>
-                            setFormData({ ...formData, nome: e.target.value })} required />
-                    </div>
+        <div>
+            <h1>Calculo Nota Final</h1>
+            <h3>Dados do aluno</h3>
+            <form>
 
-                    <div className="form-group">
-                        <label>Disciplina</label>
-                        <textarea type="email" className="form-control" value={formData.disciplina} onChange={(e) =>
-                            setFormData({ ...formData, disciplina: e.target.value })} required />
+                {/* Primeira linha */}
+                <div class="row g-3">
+                    <div className="col-md-8">
+                        <label>Nome do Aluno:</label>
+                        <input type="text" className="form-control md-8" value={NotaTeste.nomeAluno} onChange={(e) =>
+                            setNotaTeste({ ...NotaTeste, nomeAluno: e.target.value })} required />
                     </div>
-
-                    <div className="form-group">
-                        <label>Notas dos Testes</label>
-                        <textarea type="text" className="form-control" value={formData.testes} onChange={(e) =>
-                            setFormData({ ...formData, testes: e.target.value })} required />
+                    <div className="col-md-4">
+                        <label>Disciplina:</label>
+                        <input type="text" className="form-control" value={NotaTeste.disciplina} onChange={(e) =>
+                            setNotaTeste({ ...NotaTeste, disciplina: e.target.value })} required />
                     </div>
+                </div>
 
-                    <div className="form-group">
-                        <label>(%) dos testes</label>
-                        <textarea type="text" className="form-control" value={formData.porctestes} onChange={(e) =>
-                            setFormData({ ...formData, porctestes: e.target.value })} required />
+                {/* Segunda linha */}
+                <div class="row g-3">
+                    <div className="col-md-3">
+                        <label>Nota do Teste:</label>
+                        <input type="number" className="form-control" min="0" max="20" value={NotaTeste.notaTeste} onChange={(e) =>
+                            setNotaTeste({ ...NotaTeste, notaTeste: e.target.value })} required />
+
                     </div>
-
-                    <div className="form-group">
-                        <label>Nota dos Trabalhos</label>
-                        <textarea className="form-control" rows="3" value={formData.trabalhos} onChange={(e) =>
-                            setFormData({ ...formData, trabalhos: e.target.value })}></textarea>
+                    <div className="col-md-3">
+                        <label>(%) Testes:</label>
+                        <input type="number" className="form-control" min="0" max="100" value={NotaTeste.porcentagemTeste} onChange={(e) =>
+                            setNotaTeste({ ...NotaTeste, porcentagemTeste: e.target.value })} required />
                     </div>
-                    <div className="form-group">
-                        <label>(%) dos Trabalhos</label>
-                        <textarea className="form-control" rows="3" value={formData.porcTrabalhos} onChange={(e) =>
-                            setFormData({ ...formData, porcTrabalhos: e.target.value })}></textarea>
+                </div>
+
+
+                {/* terceira linha */}
+                <div class="row g-3">
+                    <div className="col-md-3">
+                        <label>Nota do Trabalho:</label>
+                        <input type="number" className="form-control" min="0" max="20" value={NotaTeste.notaTrabalho} onChange={(e) =>
+                            setNotaTeste({ ...NotaTeste, notaTrabalho: e.target.value })} required />
                     </div>
-                   
-
-                    {/* Botões de ação */}
-                    <button className="btn btn-success mr-2">Enviar</button>
-
-                    <button type="button" className="btn btn-outline-secondary"
-                        onClick={limparFormulario}>Limpar</button>
-                    
-                    <button type="button" className="btn btn-outline-secondary"
-                        onClick={limparFormulario}>Eliminar</button>
-                </form>
-            </div>
-
-            <div class="col-4">
-                {/* Mostra os dados submetidos se existirem */}
-                {dadosSubmetidos && (
-                    <div className="card mt-4">
-                        <div className="card-body">
-                            <h5 className="card-title">Dados Recebidos</h5>
-                            <p><strong>Nome:</strong> {dadosSubmetidos.nome}</p>
-                            <p><strong>Disciplina:</strong> {dadosSubmetidos.disciplina}</p>
-                            <p><strong>Nota Teste:</strong> {dadosSubmetidos.notaTeste}</p>
-                            <p><strong>(%) dos Teste: 40</strong> {dadosSubmetidos.porcTeste}</p>
-                            <p><strong>Nota Trabalho:</strong> {dadosSubmetidos.notaTrabalho}</p>
-                            <p><strong>(%) dos Trabalho: 40</strong> {dadosSubmetidos.porcTrabalho}</p>
-                        </div>
+                    <div className="col-md-3">
+                        <label>(%) Trabalhos:</label>
+                        <input type="number" className="form-control" min="0" max="100" value={NotaTeste.porcentagemTrabalho} onChange={(e) =>
+                            setNotaTeste({ ...NotaTeste, porcentagemTrabalho: e.target.value })} required />
                     </div>
-                )}
-            </div>
+                </div>
+
+                {/* Quarta linha */}
+                <div class="row g-3">
+                    <div className="col-md-3">
+                        <label>Nota das Atitudes</label>
+                        <input type="number" className="form-control" min="0" max="20" value={NotaTeste.notaAtitudes} onChange={(e) =>
+                            setNotaTeste({ ...NotaTeste, notaAtitudes: e.target.value })} required />
+                    </div>
+                    <div className="col-md-3">
+                        <label>(%) Atitudes</label>
+                        <input type="number" className="form-control" min="0" max="100" value={NotaTeste.porcentagemAtitudes} onChange={(e) =>
+                            setNotaTeste({ ...NotaTeste, porcentagemAtitudes: e.target.value })} required />
+                    </div>
+                </div>
+
+                <button type="button" className="btn btn-primary mt-3" onClick={calcularNotaFinal}>
+                    Calcular Nota Final
+                </button>
+
+                <button type="button" className="btn btn-outline-secondary mt-3" onClick={limparFormulario}>
+                    Limpar Formulário
+                </button>
+
+            </form>
         </div>
-        
     );
 }
-
-
 
 export default Notas;

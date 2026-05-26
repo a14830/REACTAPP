@@ -1,0 +1,157 @@
+import React, { useState } from 'react';
+
+function Notas() {
+  // 1. Estado para armazenar os dados do formulário
+  const [formData, setFormData] = useState({
+    nome: 'Carlos Santos',
+    disciplina: 'RC',
+    testes: '14',
+    porctestes: '40',
+    trabalhos: '18',
+    porcTrabalhos: '40',
+    atitudes: '16',
+    porcAtitudes: '20'
+  });
+
+  // Estado para armazenar o resultado e erros
+  const [resultado, setResultado] = useState(null);
+  const [erro, setErro] = useState('');
+
+  // 2. Função para atualizar os campos do formulário
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // 3. Função de submissão e cálculo (Validando sem bibliotecas externas)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErro('');
+    setResultado(null);
+
+    // Converter valores para números usando parseFloat
+    const nTestes = parseFloat(formData.testes);
+    const pTestes = parseFloat(formData.porctestes);
+    const nTrabalhos = parseFloat(formData.trabalhos);
+    const pTrabalhos = parseFloat(formData.porcTrabalhos);
+    const nAtitudes = parseFloat(formData.atitudes);
+    const pAtitudes = parseFloat(formData.porcAtitudes);
+
+    // Validação de inputs inválidos (NaN)
+    if (isNaN(nTestes) || isNaN(pTestes) || isNaN(nTrabalhos) || isNaN(pTrabalhos) || isNaN(nAtitudes) || isNaN(pAtitudes)) {
+      setErro('Por favor, preencha todos os campos numéricos corretamente.');
+      return;
+    }
+
+    // Validação 3.a: As notas só podem assumir valores de 0 a 20
+    if (nTestes < 0 || nTestes > 20 || nTrabalhos < 0 || nTrabalhos > 20 || nAtitudes < 0 || nAtitudes > 20) {
+      setErro('As notas devem ser valores estritamente entre 0 e 20.');
+      return;
+    }
+
+    // Validação 3.b: A soma das percentagens tem que ser 100
+    const somaPercentagens = pTestes + pTrabalhos + pAtitudes;
+    if (somaPercentagens !== 100) {
+      setErro(`A soma das percentagens deve ser igual a 100%. (Atual: ${somaPercentagens}%)`);
+      return;
+    }
+
+    // Validação 3.c: Média pesada das 3 notas
+    const mediaFinal = (nTestes * (pTestes / 100)) + (nTrabalhos * (pTrabalhos / 100)) + (nAtitudes * (pAtitudes / 100));
+
+    // Validação 3.d: Menção "Aprovado" ou "Reprovado"
+    const mencao = mediaFinal >= 9.5 ? 'Aprovado' : 'Reprovado';
+
+    setResultado({
+      media: mediaFinal.toFixed(2), // 2 casas decimais
+      mencao: mencao
+    });
+  };
+
+  // Requisito 4: Botão 'Limpar'
+  const handleLimpar = () => {
+    setFormData({
+      nome: '', disciplina: '', testes: '', porctestes: '', trabalhos: '', porcTrabalhos: '', atitudes: '', porcAtitudes: ''
+    });
+    setResultado(null);
+    setErro('');
+  };
+
+  return (
+    <div className="container mt-4">
+      <h2>Cálculo da nota final</h2>
+      <h4 className="text-secondary">Dados do Aluno</h4>
+
+      {/* Alerta de Erro de Validação */}
+      {erro && <div className="alert alert-danger">{erro}</div>}
+
+      <form onSubmit={handleSubmit}>
+        {/* Linha 1: Linha com colunas 8+4 */}
+        <div className="row mb-3">
+          <div className="col-8">
+            <label className="form-label">Nome do aluno:</label>
+            <input type="text" name="nome" className="form-control" value={formData.nome} onChange={handleChange} required />
+          </div>
+          <div className="col-4">
+            <label className="form-label">Disciplina:</label>
+            <input type="text" name="disciplina" className="form-control" value={formData.disciplina} onChange={handleChange} required />
+          </div>
+        </div>
+
+        {/* Linha 2: Linha com colunas 3+3 (Testes) */}
+        <div className="row mb-3">
+          <div className="col-3">
+            <label className="form-label">Nota dos Testes:</label>
+            <input type="number" name="testes" step="0.01" className="form-control" value={formData.testes} onChange={handleChange} required />
+          </div>
+          <div className="col-3">
+            <label className="form-label">(%) Testes:</label>
+            <input type="number" name="porctestes" className="form-control" value={formData.porctestes} onChange={handleChange} required />
+          </div>
+        </div>
+
+        {/* Linha 3: Linha com colunas 3+3 (Trabalhos) */}
+        <div className="row mb-3">
+          <div className="col-3">
+            <label className="form-label">Nota dos Trabalhos:</label>
+            <input type="number" name="trabalhos" step="0.01" className="form-control" value={formData.trabalhos} onChange={handleChange} required />
+          </div>
+          <div className="col-3">
+            <label className="form-label">(%) Trabalhos:</label>
+            <input type="number" name="porcTrabalhos" className="form-control" value={formData.porcTrabalhos} onChange={handleChange} required />
+          </div>
+        </div>
+
+        {/* Linha 4: Linha com colunas 3+3 (Atitudes) */}
+        <div className="row mb-3">
+          <div className="col-3">
+            <label className="form-label">Nota das Atitudes:</label>
+            <input type="number" name="atitudes" step="0.01" className="form-control" value={formData.atitudes} onChange={handleChange} required />
+          </div>
+          <div className="col-3">
+            <label className="form-label">(%) Atitudes:</label>
+            <input type="number" name="porcAtitudes" className="form-control" value={formData.porcAtitudes} onChange={handleChange} required />
+          </div>
+        </div>
+
+        {/* Botões de Ação */}
+        <div className="mb-4">
+          <button type="submit" className="btn btn-primary me-2">Calcular</button>
+          <button type="button" className="btn btn-secondary" onClick={handleLimpar}>Limpar</button>
+        </div>
+      </form>
+
+      {/* Apresentação do Resultado na mesma página (Requisito 3) */}
+      {resultado && (
+        <div className={`card p-3 mt-3 text-white ${resultado.mencao === 'Aprovado' ? 'bg-success' : 'bg-danger'}`}>
+          <h5>Resultado Final ({formData.disciplina}):</h5>
+          <p className="mb-1"><strong>Aluno:</strong> {formData.nome}</p>
+          <p className="mb-1"><strong>Média Final:</strong> {resultado.media} valores</p>
+          <h4 className="mt-2">Situação: {resultado.mencao}</h4>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default Notas;
